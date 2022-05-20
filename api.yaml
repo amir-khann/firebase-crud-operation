@@ -1,0 +1,162 @@
+# swagger: '2.0'
+# info:
+#   title: crud apis
+#   description: Sample crud apis with firebase
+#   version: 1.0.0
+# schemes:
+#   - https
+#   - http
+# produces:
+#   - application/json
+# securityDefinitions:
+#   custom_jwt:
+#     authorizationUrl: ""
+#     flow: "implicit"
+#     type: "oauth2"
+#     x-google-issuer: "brightup-dev@appspot.gserviceaccount.com"
+#     x-google-jwks_uri: "https://www.googleapis.com/robot/v1/metadata/x509/brightup-dev@appspot.gserviceaccount.com"
+#     x-google-audiences: "test-audiance"
+# paths:
+#   /:
+#     get:
+#       security:
+#         - custom_jwt: []
+#       summary: Get a user list
+#       operationId: hello
+#       x-google-backend:
+#         address:http://localhost:4000
+#       responses:
+#         '200':
+#           description: A successful response
+#           schema:
+#             type: string
+#              /:
+#     post:
+#       security:
+#         - custom_jwt: []
+#       summary: add a user
+#       requestBody:
+#         required: true
+#         content:
+#           application/json:
+#             schema:
+#               type: object
+#               properties:
+#                 username:
+#                   type: string
+#                 email:
+#                   type: string
+#                 password:
+#                   type: string
+#       operationId: hello
+#       x-google-backend:
+#         address:http://localhost:4000/create
+#       responses:
+
+#         '200':
+#           description: user added successfully
+#            content:
+#             application/json:
+#               schema:
+#                 type: object
+#                 properties:
+#                   username:
+#                     type: string
+#                     example: amir khan
+#                   email:
+#                     type: string
+#                     example: amir@gmail.com
+#                   password:
+#                     type: string
+#                     example: Pass@123
+
+
+swagger: "2.0"
+info:
+  title: this is my swagger
+  description: this is my company documentation made by me.
+  version: 1.0
+  contact:
+    email: amiraup17@gmail.com
+  license:
+    name: Apache 2.0
+    url: "http://apache.org/"
+  servers:
+    -url: "http://localhost:4000/"
+    description: This is my local server
+    -url: "http://logmethod.com"
+    description: This is my company server
+host: localhost:4000
+schemes: [https,http]
+
+paths:
+  /:
+    get:
+      summary: Return a user list
+      description: it is just return a user data
+      operationId: getUser
+      x-google-backend:
+        https://us-central1-tr-dev-348409.cloudfunctions.net/getUser
+      responses:
+        200:
+          description: Success
+  /create:
+    post:
+      summary: create User
+      produces:
+      - application/json
+      operationId: createUser
+      x-google-backend:
+        https://us-central1-tr-dev-348409.cloudfunctions.net/create
+      parameters:
+      - in: body
+        name: user
+        schema:
+          "$ref": "#/definitions/user"
+      responses:
+        '201':
+          description: User created
+  /update:
+    post:
+      summary: update user
+      produces:
+      - application/json
+      operationId: updateUser
+      x-google-backend:
+        https://us-central1-tr-dev-348409.cloudfunctions.net/updateUser
+      parameters:
+      - in: body
+        name: update
+        schema:
+          "$ref": "#/definitions/update"
+      responses:
+        '201':
+          description: User update successfully
+  /delete:
+      post:
+        summary: delete user
+        produces:
+        - application/json
+        operationId: deleteUser
+        x-google-backend:
+          https://us-central1-tr-dev-348409.cloudfunctions.net/deleteUser
+        parameters:
+        - in: body
+          name: delete
+          schema:
+            "$ref": "#/definitions/delete"
+        responses:
+          '201':
+            description: User update successfully
+definitions:
+  user:
+    type: string
+    example:
+      name: "amir khan"
+      email: amir@gmail.com
+      password: Admin@123
+  update:
+    type: string
+    example:
+      id: "123342"
+      data: 65
